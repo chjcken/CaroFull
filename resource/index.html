@@ -1,0 +1,203 @@
+<!-- <!DOCTYPE html> -->
+<html>
+	<head>
+		<title>Five in a row</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="libs/custom/caro.css">
+
+	<link rel="SHORTCUT ICON" href="img/xo.ico" type="image/x-icon" />
+	<link rel="ICON" href="img/xo.ico" type="image/ico" />
+
+	<style>
+	</style>
+
+<!-- jQuery library -->
+	<script src="libs/bootstrap/js/jquery.min.js"></script>
+	<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+
+	<body>
+
+		<div id="bg">
+			<img src="img/wood.jpg" alt="">
+		</div>
+
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					</button>
+
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home<span class="sr-only">(current)</span></a></li>
+						<li><a>Forum</a></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Play mode <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a onclick="setPlayWithCom(true);"><span class="glyphicon glyphicon-pushpin" id="playcom" aria-hidden="true"></span> Play with Computer</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a onclick="setPlayWithCom(false);"><span id="playother" class="" aria-hidden="true"></span> Play with other</a></li>
+							</ul>
+						</li>
+					</ul>
+
+
+					<form class="navbar-form navbar-right">
+						<button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalLogin"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>  Login</button>
+					</form>
+					<!-- <div class=""></div> -->
+
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container-fluid -->
+		</nav>
+		
+		<img class="img-panel" src="img/panel.png" alt="panel">
+		<div class="btn-group btn-group-lg" role="group">
+			<button type="button" class="btn btn-info btn-lg" onclick="setPlayWithCom(true);"> Practice with Bot</button>
+			<button type="button" class="btn btn-info btn-lg" onclick="setPlayWithCom(false);"> Network Game</button>
+			<button type="button" class="btn btn-info btn-lg"> How to play</button>
+			<button type="button" class="btn btn-info btn-lg">About</button>
+		</div>
+
+		<!-- Modal Login-->
+		<div class="modal fade" id="modalLogin" role="dialog">
+		    <div class="modal-dialog">
+		    
+		      <!-- Modal content-->
+		      <div class="modal-content">
+		        <div class="modal-header" style="padding:35px 50px;">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+		        </div>
+		        <div class="modal-body" style="padding:40px 50px;">
+		          <form role="form">
+		            <div class="form-group">
+		              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+		              <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+		            </div>
+		            <div class="form-group">
+		              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+		              <input type="password" class="form-control" id="psw" placeholder="Enter password">
+		            </div>
+		            <div class="checkbox">
+		              <label><input type="checkbox" value="" checked>Remember me</label>
+		            </div>
+		              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-log-in"></span> Login</button>
+		          </form>
+		        </div>
+		        <div class="modal-footer">          
+		          <p>Not a member? <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  Sign Up</button></p>
+		        </div>
+		      </div>
+		      
+		    </div>
+		</div> 
+
+
+
+
+
+		
+		<div id="modalPlay" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+		  <div class="modal-dialog-sm">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <!-- <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		      </div> -->
+		      
+		     	<div class="modal-body">	
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+		       
+					<div class="container">
+						<div class="row">
+							<div class="col-md-8">
+								<div class="panel panel-warning">
+									<div class="panel-heading">
+										<div>
+											<div class="btn-group btn-group-lg" role="group">
+												<button id="btnNewgame" type="button" class="btn btn-info" style="display: none;" onclick="resetGame();">New Game</button>
+											</div>
+
+										</div>
+
+									</div>
+
+									<div class="panel-body">
+
+										<script src="libs/custom/caro.js"></script>
+
+										</div>
+									</div>
+								</div>
+
+					
+					<div class="container">
+						<div class="row">
+							<div class="col-md-4 full-height">
+
+								<div class="well" id="well2">
+									<p id="chattext"></p>
+								</div>
+
+								<div class="form-group">
+										<div class="col-sm-10">
+											<textarea id="message" style="margin-left: -15px; margin-top: 10px;" class="form-control" rows="3" placeholder="Type your message here..." onkeypress="return keyEnterPressed(event);"></textarea>
+										</div>
+										<div class="col-sm-10"><button onclick="send();" class="btn btn-info"style="margin-left: -15px;; margin-top: 10px"><span class="glyphicon glyphicon-send"></span> Send</button>
+										</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+						
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+		</div>
+
+
+
+		<!-- Modal Searching-->
+		<div id="modalSearch" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+		    <div class="modal-dialog">
+		    
+		      <!-- Modal content-->
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" onclick="findOpponent(false);">&times;</button>
+		          <h4 class="modal-title" style="text-align: center">Finding opponent</h4>
+		        </div>
+		        <div class="modal-body">
+		          <img src="img/search.gif" width="15%" height="15%">
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-danger" onclick="findOpponent(false);" style="display: block; margin-left: auto; margin-right: auto;"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+		        </div>
+		      </div>
+		      
+		    </div>
+		</div>
+
+
+
+	</body>
+</html>
+

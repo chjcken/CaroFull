@@ -1,0 +1,72 @@
+html,body,.full-height {
+	height: 100%;
+}
+
+/*  	body {
+    background-image: url('img/wood.jpg') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+#well1 {
+	height: 15%;
+	/*fall back for IE8, Safari 5.1, Opera Mini and pre-4.4 Android browsers*/
+	height: calc(15% -   20px);
+	overflow: hidden;
+	/*better to decide how you want to handle this than to let the browser decide*/
+}
+
+#well2 {
+	height: 60%;
+	margin-bottom: 0;
+	overflow: auto;
+}
+
+.cell {
+	width: 30px;
+	height: 30px;
+	text-align: center;
+}
+
+#bg {
+	position: absolute;
+	z-index: 0;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+
+#bg img {
+	width: 100%;
+	height: 100%;
+}
+
+#modalLogin .modal-header, #modalLogin h4, #modalLogin .modal-header .close {
+	background-color: #5cb85c;
+	color:white !important;
+	text-align: center;
+	font-size: 30px;
+}
+#modalLogin .modal-footer {
+	background-color: #f9f9f9;
+}
+
+.modal-body {
+	position: relative;
+	overflow-y: auto;
+}
+
+img.img-panel {  		
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: -20px;
+	position: relative;
+}
+
+#modalSearch .modal-body img{
+	/*style="display: block; margin-left: auto; margin-right: auto;" */
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
