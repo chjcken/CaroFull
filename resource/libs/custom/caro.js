@@ -1,3 +1,35 @@
+
+  // window.fbAsyncInit = function() {
+  //   FB.init({
+  //     appId      : '937676822983060',
+  //     xfbml      : true,
+  //     version    : 'v2.5'
+  //   });
+  // };
+
+  // (function(d, s, id){
+  //    var js, fjs = d.getElementsByTagName(s)[0];
+  //    if (d.getElementById(id)) {return;}
+  //    js = d.createElement(s); js.id = id;
+  //    js.src = "//connect.facebook.net/en_US/sdk.js";
+  //    fjs.parentNode.insertBefore(js, fjs);
+  //  }(document, 'script', 'facebook-jssdk'));
+
+function postFB(){
+
+	FB.ui({
+		method: 'feed',
+		name: 'Five in a row game.',
+		link: 'fiveinarow.com',
+		picture: 'img/xo.png',
+		caption: 'Let"s play',
+		description: 'Description',
+	}, function(response){});
+}
+
+
+
+
 var webSocket;
 var isWebSocketSupported = window.WebSocket;
 
@@ -16,12 +48,13 @@ var STOP_FINDING_OPPONENT = "STOPFINDING";
 var OPPONENT_FOUND_YOU_GO_FIRST = "YOUGOFIRST";
 var OPPONENT_FOUND_YOU_GO_SECOND = "YOUGOSECOND";
 var PLAY_MOVE = "MOVE_";
+var NEWGAME = "PLAY_NEWGAME";
 var SURRENDER = "surrender";
 var ERROR = "ERROR!";
 var CHAT = "CHAT_";
 
 
-
+var checkNewGame = 0;
 
 
 var SIZE = [15, 15]; // so o chieu ngang, chieu doc
@@ -105,7 +138,26 @@ function resetGame() {
 	  }
 	}
 	myTurn = true;
+	$("#btnNewgame").hide();
 	if (!playWithCom){
+		if (webSocket != null && webSocket.readyState == 1){
+			webSocket.send(NEWGAME);
+			if (checkNewGame == 0){
+				checkNewGame = 1;
+			}
+			else if (checkNewGame == 1){
+				checkNewGame == 0;
+				myTurn = true;
+				showMessage("NEW ROUND -- YOU GO FIRST", "System");
+			}
+			else {
+				checkNewGame = 0;
+				myTurn = false;
+				showMessage("NEW ROUND -- YOU GO SECOND\nWait your opponent move", "System");
+			}
+			return;
+		}
+
 		if (isWebSocketSupported){
 			openSocket();
 			myTurn = false;
@@ -116,10 +168,15 @@ function resetGame() {
 	}
 	else {									
 		showMessage("NEW GAME -- YOU GO FIRST!!", "System");
+	}	
+}
+
+
+function closePlay(){
+	$("#modalPlay").modal("hide");
+	if (!playWithCom){
+		webSocket.send(SURRENDER);
 	}
-	$("#btnNewgame").hide();
-
-
 }
 
 
@@ -182,8 +239,6 @@ function drawAndHighlightOpponentMove(iMach, jMach){
 	drawMovedCell(iMach,jMach,OPPENENT_MOVE);
 	setTimeout("drawMovedCell(iMach,jMach,BLANK);", 200);
 	setTimeout("drawMovedCell(iMach,jMach,OPPENENT_MOVE);", 400);
-	setTimeout("drawMovedCell(iMach,jMach,BLANK);", 600);
-	setTimeout("drawMovedCell(iMach,jMach,OPPENENT_MOVE);", 800);
 }
 	
 
@@ -393,40 +448,58 @@ function openSocket(){
 		// and the first time event.data is undefined.
 		// Leave a comment if you know the answer.
 		if(event.data === undefined)
-		return;
-
-		
+			return;		
 	};
 
 	webSocket.onmessage = function(event){
 	//showMessage(event.data, "Server")
 
 		if (event.data == OPPONENT_FOUND_YOU_GO_FIRST) {
-		myTurn = true;
-		showMessage("FOUND OPPONENT -- YOU GO FIRST", "System");
-		$("#modalSearch").modal("hide");
-		return;
+			myTurn = true;
+			showMessage("FOUND OPPONENT -- YOU GO FIRST", "System");
+			$("#modalSearch").modal("hide");
+			return;
 		}
 
 		if (event.data == OPPONENT_FOUND_YOU_GO_SECOND) {
-		myTurn = false;
-		showMessage("FOUND OPPONENT -- YOU GO SECOND!!\nWait your opponent move", "System");
-		$("#modalSearch").modal("hide");
-		return;
+			myTurn = false;
+			showMessage("FOUND OPPONENT -- YOU GO SECOND!!\nWait your opponent move", "System");
+			$("#modalSearch").modal("hide");
+			return;
+		}
+
+		if (event.data == NEWGAME){
+			if (checkNewGame == 0){
+				showMessage("YOUR OPPONENT WANT TO PLAY ANOTHER ROUND -- CLICK NEW GAME TO START", "System");
+				checkNewGame = 2;
+			}
+			else {
+				
+				if (checkNewGame == 1){
+					myTurn = true;
+					showMessage("NEW ROUND -- YOU GO FIRST", "System");
+				}
+				else {
+					myTurn = false;
+					showMessage("NEW ROUND -- YOU GO SECOND\nWait your opponent move", "System");
+				}
+				checkNewGame = 0;
+			}
+
 		}
 
 		if (event.data == SURRENDER) {
-		myTurn = false;
-		alert("YOUR OPPONENT SURRENDER -- YOU WIN!!");
-		$("#btnNewgame").hide();
-		return;
+			myTurn = false;
+			alert("YOUR OPPONENT HAS QUIT!!");
+			$("#btnNewgame").hide();
+			return;
 		}
 
 		if (event.data == ERROR) {
-		myTurn = false;
-		alert("AN ERROR HAS OCCURED -- !!");
-		$("#btnNewgame").hide();
-		return;
+			myTurn = false;
+			alert("AN ERROR HAS OCCURED -- !!");
+			$("#btnNewgame").hide();
+			return;
 		}
 
 		if (event.data.indexOf(PLAY_MOVE) == 0) {
@@ -443,18 +516,18 @@ function openSocket(){
 		dly=(document.images)?10:SIZE[0]*30;
 
 		if (winningPos(i,j,OPPENENT_MOVE)==winningMove){
-		myTurn = false;
-		alert('You loose!');
-		$("#btnNewgame").show();
+			myTurn = false;
+			alert('You loose!');
+			$("#btnNewgame").show();
 		}
 
 		return;
 		}
 
 		if (event.data.indexOf(CHAT) == 0) {
-		var arrMsg = event.data.split("_");
-		showMessage(arrMsg[1], "Opponent");
-		return;
+			var arrMsg = event.data.split("_");
+			showMessage(arrMsg[1], "Opponent");
+			return;
 		}
 
 	};
@@ -480,8 +553,7 @@ function findOpponent(isFind){
 		console.log(webSocket.readyState);
 
 		if (isWebSocketAvailable){
-			webSocket.send(FIND_OPPONENT);
-			console.log("finddd = " + isFind); 	    			        		
+			webSocket.send(FIND_OPPONENT);   			        		
 		}
 	}
 	else{
@@ -515,5 +587,13 @@ function send(){
 }
 
 function showMessage(message, name){
-	document.getElementById("chattext").innerHTML += (name + ": " + message + "<br>");
+	var text;
+	if (name == "System"){
+		text = "<font color='grey'><i>" + message + "</i></font><br>";
+	}
+	else {
+		text = name + ": " + message + "<br>";
+	}
+
+	document.getElementById("chattext").innerHTML += text;
 }
