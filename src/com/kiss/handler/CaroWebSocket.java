@@ -33,6 +33,7 @@ public class CaroWebSocket extends WebSocketAdapter {
 	public void onWebSocketClose(int statusCode, String reason) {
 		System.err.println("close --- " + reason);
 		
+		leaveWaitingQueue(getSession());
 		removeFromPlayerList(getSession());
 		
 		super.onWebSocketClose(statusCode, reason);
