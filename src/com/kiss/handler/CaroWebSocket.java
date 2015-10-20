@@ -46,7 +46,6 @@ public class CaroWebSocket extends WebSocketAdapter {
 		
 		try {				
 			if (message == null) {
-				getRemote().sendString(Message.ERROR);
 				return;
 			}
 			
@@ -62,10 +61,7 @@ public class CaroWebSocket extends WebSocketAdapter {
 					//notify
 					getRemote().sendString(Message.OPPONENT_FOUND_YOU_GO_SECOND);
 					opponentSession.getRemote().sendString(Message.OPPONENT_FOUND_YOU_GO_FIRST);
-				}		
-				
-
-				System.err.println(waitingQueue.size());
+				}	
 			}
 			
 			else if (message.startsWith(Message.STOP_FINDING_OPPONENT)){

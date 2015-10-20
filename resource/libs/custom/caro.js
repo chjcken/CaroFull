@@ -86,7 +86,7 @@ function setPlayWithCom(val){
 		// 	webSocket.close();									
 
 		$("#modalPlay").modal("show");
-		resetGame();
+		resetGame(true);
 
 	}
 
@@ -96,12 +96,12 @@ function setPlayWithCom(val){
 			return;
 		}
 
-		$("#find").show();
-		$("#stopfind").show();
+		// $("#find").show();
+		// $("#stopfind").show();
 
 		$("#playother").addClass("glyphicon glyphicon-pushpin");
 		$("#playcom").removeClass();
-		resetGame();									
+		resetGame(true);									
 		
 		setTimeout("findOpponent(true);", 500);
 	}								
@@ -125,7 +125,7 @@ for (i=0;i<SIZE[0];i++) {
 }
 
 
-function resetGame() {
+function resetGame(isInitGame) {
 	for (i=0;i<SIZE[0];i++) {
 	  for (j=0;j<SIZE[1];j++) {
 	   if (f[i][j] != 0){
@@ -140,7 +140,7 @@ function resetGame() {
 	myTurn = true;
 	$("#btnNewgame").hide();
 	if (!playWithCom){
-		if (webSocket != null && webSocket.readyState == 1){
+		if (webSocket != null && webSocket.readyState == 1 && !isInitGame){
 			webSocket.send(NEWGAME);
 			if (checkNewGame == 0){
 				checkNewGame = 1;
