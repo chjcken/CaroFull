@@ -91,7 +91,7 @@
 		<div class="wrap-btns text-center">
 			<button class="btnn style1" onclick="setPlayWithCom(true);">Practice with Bot</button>
 			<button class="btnn style2" onclick="setPlayWithCom(false);">Network Game</button>  
-			<button class="btnn style3">How to play</button>
+			<button class="btnn style3" data-toggle="modal" data-target="#modalHowtoplay">How to play</button>
 		</div>
 
 
@@ -214,6 +214,28 @@
 		      
 		    </div>
 		</div>
+
+
+		<!-- Modal HTML -->
+	    <div id="modalHowtoplay" class="modal fade">
+	        <div class="modal-dialog">
+	            <div class="modal-content" style="background-image: url('img/pencil.jpg'); width:800px; height:408px;" no-repeat >
+	                <div class="modal-header">
+	                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                    <h4 class="modal-title">Five in a row -- How to play</h4>
+	                </div>
+	                <div class="modal-body" style="margin-left: 158px;">
+	                    <p class="ex1">Đây là Game Caro 5*5, hiện thực bằng html, chơi trên bàn cờ 15*15.</p>
+						<p class="ex1">Người chơi được tính là thắng khi đã tạo được 1 đường thằng, hoặc chéo, 
+	                                   liên tục và có chiều dài bằng 5.</p>
+	                    <p class="ex1">Nhấn PRACTICE WITH BOT để tập chơi với máy.</p>
+						<p class="ex1">Nhấn NETWORK GAME để tìm kiếm trận đấu với những người chơi online khác.</p>
+						<p class="ex1">Chúc bạn chơi vui vẻ ^^!</p>
+	                </div>
+	                
+	            </div>
+	        </div>
+	    </div>
 
 
 
