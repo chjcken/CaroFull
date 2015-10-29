@@ -438,7 +438,7 @@ function openSocket(){
 	return;
 	}
 	// Create a new instance of the websocket
-	webSocket = new WebSocket("ws://localhost:8080/caro/");
+	webSocket = new WebSocket("ws://10.0.0.90:8080/caro/");
 
 	/**
 	* Binds functions to the listeners for the websocket.

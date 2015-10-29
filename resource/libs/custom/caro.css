@@ -73,6 +73,30 @@ img.img-panel {
 	margin-right: auto;
 }
 
+p.ex1 {
+  font-style: oblique;
+  color: blue;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
+  
+}
+p.ex2{
+  text-align: center;
+  color: orange;
+  font-family: "Arial Black", serif;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+#modalHowtoplay h4.modal-title {
+    text-align: center;
+  font-weight: bold;
+  font-family: "ARCUS";
+  font-style: italic;
+  font-size: 38px;
+  text-shadow: 8px 2px 3px #999;
+  color: #F00;
+}
+
 .btnn {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
